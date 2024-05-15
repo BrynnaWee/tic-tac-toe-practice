@@ -1,0 +1,10 @@
+.status {
+    margin-bottom: 10px;
+}
+
+.board-row {
+    box-sizing: border-box;
+    margin:0;
+    display: flex; 
+    flex-direction: row;
+}
