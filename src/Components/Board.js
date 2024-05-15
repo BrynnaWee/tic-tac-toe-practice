@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Square from './Square';
 import "./Board.css";
 
@@ -7,6 +7,7 @@ const Board = () => {
     const outerArr = frameArr.slice().map(item => frameArr.slice());
     const [squares, setSquares] = useState(outerArr);
     const [xIsNext, setXIsNext] = useState(true);
+    const [clickCnt,setClickCnt] = useState(0);
     const bCount = 3;
     let cnt_axisX = 0;
     let cnt_axisY = 0;
@@ -20,9 +21,22 @@ const Board = () => {
         const newSquares = squares.slice();
         newSquares[x][y] = xIsNext ? 'X' : 'O';
         setSquares(newSquares);
-        if(checkWinner({x,y})) {setIsWinner(true); return;}
-        setXIsNext(prevState => !prevState);
+        if(checkWinner({x,y})) {setIsWinner(true);}     
+        console.log('handleClick함수',squares);
+        setClickCnt(prev => prev+1); 
     }
+
+    useEffect(() => {
+        console.log(clickCnt)
+        if(clickCnt < Math.pow(bCount,2)){
+            setXIsNext(prevState => !prevState);   
+        }else {
+            console.log('끝났다');
+            setTimeout(()=>{alert('끝')},0); 
+            //setTimeout을 해주지 않으면 이 구문을 읽어서 메모리에 적재하는 과정에서 alert이 화면 렌더링보다 먼저 실행됨
+        }
+    }, [clickCnt])
+   
 
 
     const checkWinner = ({x,y}) => {
@@ -50,6 +64,7 @@ const Board = () => {
     return (
         <div>
             <div className="status">{status}</div>
+            <div className="status">{clickCnt}</div>
 
             <div className="board-row">
                 {renderSquare({x:0,y:0})}
