@@ -33,7 +33,12 @@ function App() {
   }
 
   const addHistory = (newSquares) => {
+    
     const newHistory = history.concat([JSON.parse(newSquares)]);
+    
+    //전개연산자로 넣어주기
+    //const newHistory = [...history, [JSON.parse(newSquares)] ];
+
     setHistory(newHistory);
     setCurrent(prev=>prev+1);
     console.log(newHistory);
