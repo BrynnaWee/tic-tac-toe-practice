@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import "./Square.css";
 
 const Square = (props) => {
-    useEffect(()=>{
-     console.log('square박스');   
+    useEffect(()=>{ 
     },[props.value])
     
     return (

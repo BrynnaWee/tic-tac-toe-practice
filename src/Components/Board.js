@@ -2,10 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Square from './Square';
 import "./Board.css";
 
-const Board = () => {
-    const frameArr = Array(3).fill(null);
-    const outerArr = frameArr.slice().map(item => frameArr.slice());
-    const [squares, setSquares] = useState(outerArr);
+const Board = ({squares,setSquares,historyMode,addHistory}) => {
     const [xIsNext, setXIsNext] = useState(true);
     const [clickCnt,setClickCnt] = useState(0);
     const bCount = 3;
@@ -17,13 +14,13 @@ const Board = () => {
 
     const status = `${!isWinner ? 'Next player : ' : 'The Winner is : '} ${xIsNext ? 'X' : 'O'}`;
     const handleClick = ({x,y}) => {
-        if(squares[x][y] || isWinner) return;
+        if(squares[x][y] || isWinner || historyMode) return;
         const newSquares = squares.slice();
         newSquares[x][y] = xIsNext ? 'X' : 'O';
         setSquares(newSquares);
-        if(checkWinner({x,y})) {setIsWinner(true);}     
-        console.log('handleClick함수',squares);
-        setClickCnt(prev => prev+1); 
+        addHistory(JSON.stringify(newSquares));
+        if(checkWinner({x,y})) {setIsWinner(true);} 
+        setClickCnt(prev => prev+1);        
     }
 
     useEffect(() => {
@@ -31,13 +28,10 @@ const Board = () => {
         if(clickCnt < Math.pow(bCount,2)){
             setXIsNext(prevState => !prevState);   
         }else {
-            console.log('끝났다');
-            setTimeout(()=>{alert('끝')},0); 
+            setTimeout(()=>{alert('게임 끝')},0); 
             //setTimeout을 해주지 않으면 이 구문을 읽어서 메모리에 적재하는 과정에서 alert이 화면 렌더링보다 먼저 실행됨
         }
-    }, [clickCnt])
-   
-
+    }, [clickCnt]);
 
     const checkWinner = ({x,y}) => {
         const value = squares[x][y];

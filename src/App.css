@@ -6,3 +6,38 @@
 .game-info {
     margin-left: 20px;
 }
+
+.game-info ol {
+    text-align: center;
+    width: 150px;
+}
+
+.game-info ol li {
+    margin: 5px 0;
+    padding: 10px 10px;
+    background-color:green;
+    color: white;
+    border-radius: 10px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.modeBtnWrap {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+}
+
+.modeBtnWrap > button {
+    border: none;
+    line-height: 32px;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.modeBtnWrap > button+button {
+    margin-left: 10px;
+}
